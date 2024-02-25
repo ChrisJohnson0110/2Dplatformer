@@ -19,32 +19,8 @@ public class TongueAttack : MonoBehaviour
 
     void Update()
     {
-        //if (isFacingRight == true)
-        //{
-        //    if (returningProjectile == false)
-        //    {
-        //        transform.Translate(Vector3.right * speed * Time.deltaTime);
-        //    }
-        //    else
-        //    {
-        //        transform.Translate(-(Vector3.right * speed * Time.deltaTime));
-        //    }
-        //}
-        //else
-        //{
-        //    if (returningProjectile == false)
-        //    {
-        //        transform.Translate(-Vector3.right * speed * Time.deltaTime);
-        //    }
-        //    else
-        //    {
-        //        transform.Translate(Vector3.right * speed * Time.deltaTime);
-        //    }
-        //}
-
         if (isFacingRight == true)
         {
-            //transform.Translate((returningProjectile ? -1 : 1) * Vector3.right * speed * Time.deltaTime);
             transform.position += new Vector3((returningProjectile ? -speed : speed), 0, 0) * Time.deltaTime;
             if (transform.position.x <= GameObject.FindGameObjectWithTag("Player").transform.position.x)
             {
@@ -53,7 +29,6 @@ public class TongueAttack : MonoBehaviour
         }
         else if (isFacingRight == false)
         {
-            //transform.Translate(-(returningProjectile ? 1 : -1) * Vector3.right * speed * Time.deltaTime);
             transform.position += new Vector3((returningProjectile ? speed : -speed), 0, 0) * Time.deltaTime;
             if (transform.position.x >= GameObject.FindGameObjectWithTag("Player").transform.position.x)
             {
@@ -65,32 +40,10 @@ public class TongueAttack : MonoBehaviour
         {
             ReturnProjectile();
         }
-
-        //if (returningProjectile == false)
-        //{
-        //    transform.Translate(Vector3.right * speed * Time.deltaTime);
-        //}
-        //else
-        //{
-        //    transform.Translate(-(Vector3.right * speed * Time.deltaTime));
-        //}
-
-        //check distance
-
-        //if (Vector3.Distance(initialPosition, transform.position) >= range)
-        //{
-        //    ReturnProjectile();
-        //}
-        //check return
-        //if (transform.position.x <= GameObject.FindGameObjectWithTag("Player").transform.position.x)
-        //{
-        //    gameObject.SetActive(false);
-        //}
     }
 
     void ReturnProjectile()
     {
-        //transform.position = initialPosition;
         returningProjectile = true;
     }
 

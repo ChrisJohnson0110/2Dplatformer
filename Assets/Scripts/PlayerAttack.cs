@@ -35,15 +35,6 @@ public class PlayerAttack : MonoBehaviour
     void TongueProjectile()
     {
         GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        //projectile.transform.SetParent(this.gameObject.transform);
-        //if (projectile == null)
-        //{
-        //    projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        //}
-        //else
-        //{
-        //    projectile.SetActive(true);
-        //}
 
         //set tongue properties
         TongueAttack projectileController = projectile.GetComponent<TongueAttack>();
@@ -53,7 +44,6 @@ public class PlayerAttack : MonoBehaviour
             projectileController.speed = TongueSpeed;
             projectileController.range = TongueRange;
             projectileController.returningProjectile = false;
-            //projectileController.initialPosition = transform.position;
             projectileController.isFacingRight = isFacingRight;
         }
     }
