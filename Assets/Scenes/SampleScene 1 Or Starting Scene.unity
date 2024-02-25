@@ -1622,7 +1622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6315b237801a7345bcf655c40923593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MusicVolume: 0.1
+  MusicVolume: 0
 --- !u!4 &872632290
 Transform:
   m_ObjectHideFlags: 0
