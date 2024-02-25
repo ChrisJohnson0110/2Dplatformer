@@ -22,6 +22,41 @@ public class PlayerAttack : MonoBehaviour
     float spitAttackDelay;
     [SerializeField] float tongueAttackDelayStarting = 2f;
     float tongueAttackDelay;
+    
+    [Header("Tongue")]
+    public GameObject projectilePrefab;
+    //GameObject projectile = null;
+    [SerializeField] float TongueSpeed = 30f;
+    [SerializeField] float TongueRange = 5f;
+
+    bool isFacingRight = true;
+
+
+    void TongueProjectile()
+    {
+        GameObject projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        //projectile.transform.SetParent(this.gameObject.transform);
+        //if (projectile == null)
+        //{
+        //    projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        //}
+        //else
+        //{
+        //    projectile.SetActive(true);
+        //}
+
+        //set tongue properties
+        TongueAttack projectileController = projectile.GetComponent<TongueAttack>();
+        
+        if (projectileController != null)
+        {
+            projectileController.speed = TongueSpeed;
+            projectileController.range = TongueRange;
+            projectileController.returningProjectile = false;
+            //projectileController.initialPosition = transform.position;
+            projectileController.isFacingRight = isFacingRight;
+        }
+    }
 
     private void Awake()
     {
@@ -37,6 +72,20 @@ public class PlayerAttack : MonoBehaviour
         GetAttackProperties();
         SetAttackProperties();
     }
+
+
+    private void Update()
+    {
+        if (input.RetrieveMoveInput() == -1)
+        {
+            isFacingRight = false;
+        }
+        else if (input.RetrieveMoveInput() == 1)
+        {
+            isFacingRight = true;
+        }
+    }
+
 
     //update the values in this script that represent the power ups obtained
     public void GetAttackProperties()
@@ -78,7 +127,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if (input.RetrieveAttackInputOne() == true)
             {
-                Debug.Log("Tongue Attack");
+                TongueProjectile();
                 tongueAttackDelay = tongueAttackDelayStarting;
             }
         }
@@ -108,14 +157,7 @@ public class PlayerAttack : MonoBehaviour
 
                 AttackToUse.transform.position = this.transform.position;
 
-                if (input.RetrieveMoveInput() < 0)
-                {
-                    AttackToUse.GetComponent<ProjectileProperties>().isFacingRight = false;
-                }
-                else
-                {
-                    AttackToUse.GetComponent<ProjectileProperties>().isFacingRight = true;
-                }
+                AttackToUse.GetComponent<ProjectileProperties>().isFacingRight = isFacingRight;
 
                 AttackToUse.SetActive(true);
                 spitAttackDelay = spitAttackDelayStarting;

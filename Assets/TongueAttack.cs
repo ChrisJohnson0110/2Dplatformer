@@ -4,38 +4,94 @@ using UnityEngine;
 
 public class TongueAttack : MonoBehaviour
 {
+    public bool returningProjectile = false;
+    public bool isFacingRight = false;
 
-    public float speed = 5f; // Adjust the overall speed of the projectile
-    public float amplitude = 5f; // Adjust the amplitude of the projectile's movement
+    public float speed = 2;
+    public float range = 5f;
 
-    private float startTime;
-    private Vector2 initialLocalPosition;
+    public Vector3 initialPosition;
 
-
-    // Start is called before the first frame update
     void Start()
     {
-        startTime = Time.time;
-        initialLocalPosition = transform.localPosition;
+        initialPosition = transform.position;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //if (isFacingRight == true)
+        //{
+        //    if (returningProjectile == false)
+        //    {
+        //        transform.Translate(Vector3.right * speed * Time.deltaTime);
+        //    }
+        //    else
+        //    {
+        //        transform.Translate(-(Vector3.right * speed * Time.deltaTime));
+        //    }
+        //}
+        //else
+        //{
+        //    if (returningProjectile == false)
+        //    {
+        //        transform.Translate(-Vector3.right * speed * Time.deltaTime);
+        //    }
+        //    else
+        //    {
+        //        transform.Translate(Vector3.right * speed * Time.deltaTime);
+        //    }
+        //}
 
-        //if tongue attack
-        //get dir on first use
+        if (isFacingRight == true)
+        {
+            //transform.Translate((returningProjectile ? -1 : 1) * Vector3.right * speed * Time.deltaTime);
+            transform.position += new Vector3((returningProjectile ? -speed : speed), 0, 0) * Time.deltaTime;
+            if (transform.position.x <= GameObject.FindGameObjectWithTag("Player").transform.position.x)
+            {
+                gameObject.SetActive(false);
+            }
+        }
+        else if (isFacingRight == false)
+        {
+            //transform.Translate(-(returningProjectile ? 1 : -1) * Vector3.right * speed * Time.deltaTime);
+            transform.position += new Vector3((returningProjectile ? speed : -speed), 0, 0) * Time.deltaTime;
+            if (transform.position.x >= GameObject.FindGameObjectWithTag("Player").transform.position.x)
+            {
+                gameObject.SetActive(false);
+            }
+        }
 
-        float timePassed = Time.time - startTime;
-        float displacement = amplitude * Mathf.Sin(timePassed * speed);
+        if (Vector3.Distance(initialPosition, transform.position) >= range)
+        {
+            ReturnProjectile();
+        }
 
-        //change displacement value to be position or negative depending on desired direction 
-        //get parent dir
-        //use math approx to get if tongue has returned
-        //set inactive
+        //if (returningProjectile == false)
+        //{
+        //    transform.Translate(Vector3.right * speed * Time.deltaTime);
+        //}
+        //else
+        //{
+        //    transform.Translate(-(Vector3.right * speed * Time.deltaTime));
+        //}
 
-        Vector2 newLocalPosition = initialLocalPosition + Vector2.right * displacement;
-        transform.localPosition = Vector2.Lerp(transform.localPosition, newLocalPosition, Time.deltaTime * speed);
+        //check distance
 
+        //if (Vector3.Distance(initialPosition, transform.position) >= range)
+        //{
+        //    ReturnProjectile();
+        //}
+        //check return
+        //if (transform.position.x <= GameObject.FindGameObjectWithTag("Player").transform.position.x)
+        //{
+        //    gameObject.SetActive(false);
+        //}
     }
+
+    void ReturnProjectile()
+    {
+        //transform.position = initialPosition;
+        returningProjectile = true;
+    }
+
 }
